@@ -9,15 +9,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.compose.*
 import com.example.bluetoothchat.theme.BluetoothChatTheme
 import com.example.bluetoothchat.ui.*
 
 
-
-class MainActivity :
-    ComponentActivity(){
+class MainActivity : ComponentActivity(){
 
 
     override fun onCreate(
@@ -26,18 +23,14 @@ class MainActivity :
 
         super.onCreate(savedInstanceState)
 
-
         enableEdgeToEdge()
 
 
         setContent {
 
-
             BluetoothChatTheme {
 
-
                 AppNavigation()
-
 
             }
 
@@ -46,18 +39,6 @@ class MainActivity :
     }
 
 }
-
-
-
-data class BottomItem(
-
-    val name:String,
-
-    val route:String,
-
-    val icon:ImageVector
-
-)
 
 
 
@@ -72,21 +53,19 @@ fun AppNavigation(){
 
     val items = listOf(
 
-        BottomItem(
+        Triple(
             "首页",
             "home",
             Icons.Default.Home
         ),
 
-
-        BottomItem(
+        Triple(
             "联系人",
             "contacts",
             Icons.Default.People
         ),
 
-
-        BottomItem(
+        Triple(
             "我的",
             "profile",
             Icons.Default.Person
@@ -104,45 +83,51 @@ fun AppNavigation(){
             NavigationBar {
 
 
-                items.forEach {
-
-
-                    item ->
+                items.forEach { item ->
 
 
                     NavigationBarItem(
 
-                        selected = false,
+                        selected =
+                        false,
 
 
                         onClick = {
 
-                            navController
-                                .navigate(item.route)
+
+                            navController.navigate(
+                                item.second
+                            )
+
 
                         },
 
 
                         icon = {
 
+
                             Icon(
-
-                                item.icon,
-
-                                contentDescription = null
-
+                                item.third,
+                                null
                             )
+
 
                         },
 
 
                         label = {
 
-                            Text(item.name)
+
+                            Text(
+                                item.first
+                            )
+
 
                         }
 
+
                     )
+
 
                 }
 
@@ -158,7 +143,7 @@ fun AppNavigation(){
 
         NavHost(
 
-            navController,
+            navController = navController,
 
             startDestination = "home"
 
@@ -181,9 +166,32 @@ fun AppNavigation(){
 
             composable("profile"){
 
-                ProfileScreen()
+                ProfileScreen(
+                    navController
+                )
 
             }
+
+
+
+            composable("settings"){
+
+                SettingsScreen(
+                    navController
+                )
+
+            }
+
+
+
+            composable("about"){
+
+                AboutScreen(
+                    navController
+                )
+
+            }
+
 
         }
 
