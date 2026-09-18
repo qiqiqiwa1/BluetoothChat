@@ -4,30 +4,40 @@ package com.example.bluetoothchat
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.compose.*
-import com.example.bluetoothchat.ui.ContactScreen
-import com.example.bluetoothchat.ui.HomeScreen
-import com.example.bluetoothchat.ui.ProfileScreen
+import com.example.bluetoothchat.theme.BluetoothChatTheme
+import com.example.bluetoothchat.ui.*
+
 
 
 class MainActivity :
-    ComponentActivity() {
+    ComponentActivity(){
 
 
     override fun onCreate(
         savedInstanceState: Bundle?
-    ) {
+    ){
 
         super.onCreate(savedInstanceState)
 
 
+        enableEdgeToEdge()
+
+
         setContent {
 
-            MaterialTheme {
 
-                BluetoothChatApp()
+            BluetoothChatTheme {
+
+
+                AppNavigation()
+
 
             }
 
@@ -39,12 +49,51 @@ class MainActivity :
 
 
 
+data class BottomItem(
+
+    val name:String,
+
+    val route:String,
+
+    val icon:ImageVector
+
+)
+
+
+
 @Composable
-fun BluetoothChatApp() {
+fun AppNavigation(){
 
 
     val navController =
         rememberNavController()
+
+
+
+    val items = listOf(
+
+        BottomItem(
+            "首页",
+            "home",
+            Icons.Default.Home
+        ),
+
+
+        BottomItem(
+            "联系人",
+            "contacts",
+            Icons.Default.People
+        ),
+
+
+        BottomItem(
+            "我的",
+            "profile",
+            Icons.Default.Person
+        )
+
+    )
+
 
 
     Scaffold(
@@ -55,108 +104,91 @@ fun BluetoothChatApp() {
             NavigationBar {
 
 
-                NavigationBarItem(
-
-                    selected = false,
-
-                    onClick = {
-
-                        navController.navigate("home")
-
-                    },
-
-                    icon = {},
-
-                    label = {
-
-                        Text("首页")
-
-                    }
-
-                )
+                items.forEach {
 
 
-                NavigationBarItem(
-
-                    selected = false,
-
-                    onClick = {
-
-                        navController.navigate("contacts")
-
-                    },
-
-                    icon = {},
-
-                    label = {
-
-                        Text("联系人")
-
-                    }
-
-                )
+                    item ->
 
 
-                NavigationBarItem(
+                    NavigationBarItem(
 
-                    selected = false,
+                        selected = false,
 
-                    onClick = {
 
-                        navController.navigate("profile")
+                        onClick = {
 
-                    },
+                            navController
+                                .navigate(item.route)
 
-                    icon = {},
+                        },
 
-                    label = {
 
-                        Text("我的")
+                        icon = {
 
-                    }
+                            Icon(
 
-                )
+                                item.icon,
+
+                                contentDescription = null
+
+                            )
+
+                        },
+
+
+                        label = {
+
+                            Text(item.name)
+
+                        }
+
+                    )
+
+                }
 
 
             }
 
+
         }
 
-    ) {
+
+    ){
 
 
         NavHost(
 
-            navController = navController,
+            navController,
 
             startDestination = "home"
 
-        ) {
+        ){
 
 
-            composable("home") {
+            composable("home"){
 
                 HomeScreen()
 
             }
 
 
-            composable("contacts") {
+            composable("contacts"){
 
                 ContactScreen()
 
             }
 
 
-            composable("profile") {
+            composable("profile"){
 
                 ProfileScreen()
 
             }
 
-
         }
 
+
     }
+
 
 }
