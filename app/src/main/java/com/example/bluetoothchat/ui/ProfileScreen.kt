@@ -3,17 +3,23 @@ package com.example.bluetoothchat.ui
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.bluetoothchat.data.getDeviceInfo
 
 
 
 @Composable
 fun ProfileScreen(){
+
+
+    val device =
+        getDeviceInfo()
+
 
 
     Column(
@@ -22,49 +28,67 @@ fun ProfileScreen(){
         Modifier
             .fillMaxSize()
             .safeDrawingPadding()
-            .padding(20.dp),
-
-        horizontalAlignment =
-        Alignment.CenterHorizontally
+            .padding(20.dp)
 
     ){
 
 
-        Icon(
-
-            imageVector =
-            Icons.Default.Person,
-
-            contentDescription = null,
-
-            modifier =
-            Modifier.size(90.dp)
-
-        )
-
-
-        Spacer(
-
-            Modifier.height(20.dp)
-
-        )
-
-
         Text(
 
-            text = "未设置昵称",
+            "我的",
 
             style =
-            MaterialTheme.typography.headlineSmall
+            MaterialTheme.typography.headlineMedium
 
         )
 
 
         Spacer(
-
             Modifier.height(30.dp)
-
         )
+
+
+        Column(
+
+            horizontalAlignment =
+            Alignment.CenterHorizontally,
+
+            modifier =
+            Modifier.fillMaxWidth()
+
+        ){
+
+
+            Icon(
+
+                Icons.Default.Person,
+
+                contentDescription=null,
+
+                modifier =
+                Modifier.size(90.dp)
+
+            )
+
+
+            Spacer(
+                Modifier.height(12.dp)
+            )
+
+
+            Text(
+                "未设置昵称"
+            )
+
+
+        }
+
+
+
+        Spacer(
+            Modifier.height(30.dp)
+        )
+
 
 
         Card(
@@ -83,18 +107,26 @@ fun ProfileScreen(){
             ){
 
 
-                Text(
-                    "设备名称：Android 手机"
-                )
+                Text("设备信息")
 
 
                 Spacer(
-                    Modifier.height(10.dp)
+                    Modifier.height(12.dp)
                 )
 
 
                 Text(
-                    "蓝牙状态：未连接"
+                    "品牌：${device.manufacturer}"
+                )
+
+
+                Text(
+                    "型号：${device.model}"
+                )
+
+
+                Text(
+                    "Android：${device.androidVersion}"
                 )
 
 
@@ -104,6 +136,42 @@ fun ProfileScreen(){
         }
 
 
+
+        Spacer(
+            Modifier.height(16.dp)
+        )
+
+
+        Button(
+
+            modifier =
+            Modifier.fillMaxWidth(),
+
+            onClick = {}
+
+        ){
+
+            Text("⚙ 设置")
+
+        }
+
+
+
+        Button(
+
+            modifier =
+            Modifier.fillMaxWidth(),
+
+            onClick = {}
+
+        ){
+
+            Text("ⓘ 关于")
+
+        }
+
+
     }
+
 
 }
