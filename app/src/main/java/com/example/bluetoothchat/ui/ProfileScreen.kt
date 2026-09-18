@@ -9,12 +9,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.bluetoothchat.data.getDeviceInfo
 
 
 
 @Composable
-fun ProfileScreen(){
+fun ProfileScreen(
+
+    navController: NavController
+
+){
 
 
     val device =
@@ -34,13 +39,11 @@ fun ProfileScreen(){
 
 
         Text(
-
             "我的",
-
             style =
             MaterialTheme.typography.headlineMedium
-
         )
+
 
 
         Spacer(
@@ -48,13 +51,14 @@ fun ProfileScreen(){
         )
 
 
+
         Column(
 
-            horizontalAlignment =
-            Alignment.CenterHorizontally,
-
             modifier =
-            Modifier.fillMaxWidth()
+            Modifier.fillMaxWidth(),
+
+            horizontalAlignment =
+            Alignment.CenterHorizontally
 
         ){
 
@@ -63,7 +67,7 @@ fun ProfileScreen(){
 
                 Icons.Default.Person,
 
-                contentDescription=null,
+                null,
 
                 modifier =
                 Modifier.size(90.dp)
@@ -110,20 +114,13 @@ fun ProfileScreen(){
                 Text("设备信息")
 
 
-                Spacer(
-                    Modifier.height(12.dp)
-                )
-
-
                 Text(
                     "品牌：${device.manufacturer}"
                 )
 
-
                 Text(
                     "型号：${device.model}"
                 )
-
 
                 Text(
                     "Android：${device.androidVersion}"
@@ -138,8 +135,9 @@ fun ProfileScreen(){
 
 
         Spacer(
-            Modifier.height(16.dp)
+            Modifier.height(20.dp)
         )
+
 
 
         Button(
@@ -147,26 +145,65 @@ fun ProfileScreen(){
             modifier =
             Modifier.fillMaxWidth(),
 
-            onClick = {}
+            onClick = {
+
+                navController.navigate(
+                    "settings"
+                )
+
+            }
 
         ){
 
-            Text("⚙ 设置")
+
+            Icon(
+                Icons.Default.Settings,
+                null
+            )
+
+
+            Spacer(
+                Modifier.width(8.dp)
+            )
+
+
+            Text("设置")
+
 
         }
 
 
 
+
         Button(
 
             modifier =
             Modifier.fillMaxWidth(),
 
-            onClick = {}
+            onClick = {
+
+                navController.navigate(
+                    "about"
+                )
+
+            }
 
         ){
 
-            Text("ⓘ 关于")
+
+            Icon(
+                Icons.Default.Info,
+                null
+            )
+
+
+            Spacer(
+                Modifier.width(8.dp)
+            )
+
+
+            Text("关于")
+
 
         }
 
